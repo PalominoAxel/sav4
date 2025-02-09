@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Valentín</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background-color: #ffcccc;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        h1 {
+            color: #d10000;
+            font-size: 2.5em;
+            animation: fadeIn 2s ease-in-out;
+            position: relative;
+            z-index: 2;
+        }
+        .buttons {
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            position: relative;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        .yes {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        .no {
+            background-color: #333;
+            color: white;
+            transition: transform 0.3s;
+            position: absolute;
+        }
+        .cat-container {
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .cat {
+            width: 150px;
+            transition: transform 0.5s, filter 0.5s;
+        }
+        .happy {
+            transform: scale(1.1);
+            filter: brightness(1.5);
+        }
+        .message {
+            font-size: 1.5em;
+            color: #d10000;
+            margin-top: 20px;
+            display: none;
+            font-weight: bold;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .roses {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .rose {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-image: url('imagenes/corazon.png'); /* URL de la rosa */
+            background-size: cover;
+            animation: float 6s infinite linear;
+            opacity: 0.7;
+        }
+        @keyframes float {
+            from {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="roses"></div>
+    <h1>¿Quieres ser mi San Valentín?</h1>
+    <div class="cat-container">
+        <img src="imagenes/normal.gif" alt="Pompompurin triste" class="cat" id="cat"> <!-- URL de imagen triste -->
+    </div>
+    <div class="buttons">
+        <button class="yes" id="yes" onclick="aceptar()">Sí</button>
+        <button class="no" id="no" onmouseover="moverBoton(); cambiarImagen('no')">No</button>
+    </div>
+    <div class="message" id="message">¡Sabía que dirías que sí! TE AMO❤️</div>
+    <script>
+        function moverBoton() {
+            let button = document.getElementById('no');
+            let maxX = window.innerWidth - button.offsetWidth - 50;
+            let maxY = window.innerHeight - button.offsetHeight - 50;
+            let x = Math.random() * maxX;
+            let y = Math.random() * maxY;
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+        }
+        function aceptar() {
+            document.getElementById('cat').src = "imagenes/feliz.gif"; /* URL de imagen feliz */
+            document.getElementById('cat').classList.add('happy');
+            document.getElementById('message').style.display = 'block';
+            document.getElementById('yes').style.display = 'none'; // Oculta el botón "Sí"
+        }
+        function cambiarImagen(estado) {
+            let cat = document.getElementById('cat');
+            if (estado === 'no') {
+                cat.src = "imagenes/triste.gif"; /* URL de imagen cuando se pone el cursor en No */
+            }
+        }
+        function crearRosas() {
+            const container = document.querySelector('.roses');
+            for (let i = 30; i < 50; i++) {
+                let rose = document.createElement('div');
+                rose.classList.add('rose');
+                rose.style.left = `${Math.random() * 100}vw`;
+                rose.style.animationDuration = `${4 + Math.random() * 3}s`;
+                rose.style.animationDelay = `${Math.random() * 2}s`;
+                container.appendChild(rose);
+            }
+        }
+        crearRosas();
+    </script>
+</body>
+</html>
